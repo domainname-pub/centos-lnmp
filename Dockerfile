@@ -19,6 +19,8 @@ RUN rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noar
 
 # install nginx
 RUN yum -y install nginx
+RUN sed -ri 's/user = apache/user = nginx/g' /etc/php-fpm.d/www.conf
+RUN sed -ri 's/group = apache/group = nginx/g' /etc/php-fpm.d/www.conf
 RUN service nginx start
 RUN chkconfig nginx on
 
