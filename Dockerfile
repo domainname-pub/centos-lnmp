@@ -17,22 +17,26 @@ RUN chkconfig ntpd on
 # install epel
 RUN rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 
-# install httpd
-RUN yum -y install nginx vim-enhanced bash-completion unzip
+# install nginx
+RUN yum -y install nginx
 RUN service nginx start
 RUN chkconfig nginx on
 
+# install php
+RUN yum -y install php-fpm php-cli php-pdo php-mysql php-gd php-imap php-ldap php-odbc php-pear php-xml php-xmlrpc php-mbstring php-mcrypt php-bcmath php-mhash libmcrypt
+RUN chkconfig php-fpm on
+
 # install mysql
-RUN yum install -y mysql mysql-server
+RUN yum -y install mysql mysql-server
 RUN echo "NETWORKING=yes" > /etc/sysconfig/network
 # start mysqld to create initial tables
 RUN service mysqld start
 
-# install php
-RUN yum install -y php php-mysql php-devel php-gd php-pecl-memcache php-pspell php-snmp php-xmlrpc php-xml
+# install vim
+RUN yum -y install vim-enhanced
 
 # install supervisord
-RUN yum install -y python-pip && pip install "pip>=1.4,<1.5" --upgrade
+RUN yum -y install python-pip && pip install "pip>=1.4,<1.5" --upgrade
 RUN pip install supervisor
 
 # install sshd
